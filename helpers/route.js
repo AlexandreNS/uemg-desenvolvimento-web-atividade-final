@@ -98,7 +98,7 @@ function routerModelBuilder(schema, limitDefault = 20, middlewares = {}) {
 
     const { value: item, error } = await Joi.object().keys(fieldsValidate).validate(req.body, { abortEarly: false })
 
-    if (error) return res.send({ error: error.details.map(({ message }) => message) })
+    if (error) return res.status(400).json({ error: error.details.map(({ message }) => message) })
 
     database.query(
       `INSERT INTO ${schema.table} SET ?`, item,
